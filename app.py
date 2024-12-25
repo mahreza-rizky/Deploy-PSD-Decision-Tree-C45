@@ -309,16 +309,21 @@ elif menu == "Modelling":
     # Menyimpan model setelah pelatihan
     joblib.dump(clf, 'heart_attack_model.pkl')  # Simpan model
 
-    # Menampilkan confusion matrix dalam bentuk heatmap
-    st.write("**Confusion Matrix (Heatmap)**:")
-    conf_matrix = confusion_matrix(y_test, y_pred)
+    # Evaluasi Model
+    y_pred = clf.predict(X_test)
     
-    # Membuat heatmap
-    fig, ax = plt.subplots(figsize=(6, 4))
-    sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=['0', '1'], yticklabels=['0', '1'], cbar=False, ax=ax)
-    ax.set_xlabel('Predicted')
-    ax.set_ylabel('True')
-    st.pyplot(fig)
+    st.write("### Evaluasi Model")
+    st.write(f"**Accuracy**: {accuracy_score(y_test, y_pred):.2f}")
+    
+    # Menampilkan confusion matrix dalam bentuk heatmap
+    st.write("**Confusion Matrix**:")
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    st.write(conf_matrix)
+    
+    # Menampilkan classification report
+    st.write("**Classification Report**:")
+    report = classification_report(y_test, y_pred)
+    st.text(report)
     
     # Visualisasi Pohon Keputusan
     st.write("### Visualisasi Pohon Keputusan")
