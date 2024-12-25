@@ -362,26 +362,3 @@ elif menu == "Klasifikasi":
         # Menampilkan hasil prediksi
         result = "Disease" if prediction == 1 else "No Disease"
         st.write(f"Hasil Prediksi: {result}")
-
-import os
-import sys
-
-if getattr(sys, 'frozen', False):
-    # Jika aplikasi dijalankan sebagai .exe, cari file relative ke folder executable
-    base_path = sys._MEIPASS
-else:
-    base_path = os.path.abspath(".")
-
-# Path ke file yang dimasukkan ke dalam .exe
-csv_path = os.path.join(base_path, 'heart.csv')
-model_path = os.path.join(base_path, 'heart_attack_model.pkl')
-
-# Contoh penggunaan dengan pandas dan joblib untuk load model
-import pandas as pd
-from sklearn.externals import joblib
-
-# Memuat dataset dan model
-data = pd.read_csv(csv_path)
-model = joblib.load(model_path)
-
-# Lakukan proses lainnya yang diperlukan
