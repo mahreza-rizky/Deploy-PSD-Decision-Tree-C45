@@ -309,6 +309,9 @@ elif menu == "Modelling":
     # Menyimpan model setelah pelatihan
     joblib.dump(clf, 'heart_attack_model.pkl')  # Simpan model
 
+    import streamlit as st
+    from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+    
     # Evaluasi Model
     y_pred = clf.predict(X_test)
     
@@ -316,21 +319,15 @@ elif menu == "Modelling":
     st.write(f"**Accuracy**: {accuracy_score(y_test, y_pred):.2f}")
     
     # Menampilkan confusion matrix dalam bentuk heatmap
-    st.write("**Confusion Matrix (Heatmap)**:")
+    st.write("**Confusion Matrix**:")
     conf_matrix = confusion_matrix(y_test, y_pred)
-    fig, ax = plt.subplots(figsize=(6, 4))
-    sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=['0', '1'], yticklabels=['0', '1'], cbar=False, ax=ax)
-    ax.set_xlabel('Predicted')
-    ax.set_ylabel('True')
-    st.pyplot(fig)
+    st.write(conf_matrix)
     
-    # Mengubah classification report menjadi DataFrame
-    st.write("**Classification Report (Formatted Table)**:")
-    report = classification_report(y_test, y_pred, output_dict=True)
-    report_df = pd.DataFrame(report).transpose()
-    
-    # Menampilkan classification report sebagai tabel yang lebih menarik
-    st.dataframe(report_df.style.background_gradient(cmap='Blues').set_precision(2))
+    # Menampilkan classification report
+    st.write("**Classification Report**:")
+    report = classification_report(y_test, y_pred)
+    st.text(report)
+
 
     
     # Visualisasi Pohon Keputusan
